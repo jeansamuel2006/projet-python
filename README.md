@@ -86,3 +86,24 @@ poetry run isort src
 poetry run flake8 src
 poetry run mypy src
 ```
+### Генераторы (`generators`)
+
+Модуль `generators` содержит функции для работы с большими объёмами данных
+транзакций через генераторы.
+
+```python
+from generators import filter_by_currency, transaction_descriptions, card_number_generator
+
+# Фильтрация транзакций по валюте (возвращает итератор)
+usd = filter_by_currency(transactions, "USD")
+next(usd)
+
+# Описание каждой транзакции по очереди
+descriptions = transaction_descriptions(transactions)
+next(descriptions)
+
+# Генерация номеров карт в заданном диапазоне
+for card in card_number_generator(1, 5):
+    print(card)
+# 0000 0000 0000 0001 ... 0000 0000 0000 0005
+```
