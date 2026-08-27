@@ -107,3 +107,21 @@ for card in card_number_generator(1, 5):
     print(card)
 # 0000 0000 0000 0001 ... 0000 0000 0000 0005
 ```
+### Декораторы (`decorators`)
+
+Модуль `decorators` содержит декоратор `log` для логирования выполнения функций.
+Декоратор записывает начало, конец и ошибки выполнения функции в файл или в консоль.
+
+```python
+from decorators import log
+
+
+@log(filename="mylog.txt")   # если filename не указан — вывод в консоль
+def my_function(x, y):
+    return x + y
+
+
+my_function(1, 2)
+# При успешном выполнении:  my_function ok
+# При ошибке:               my_function error: <тип ошибки>. Inputs: (1, 2), {}
+```
