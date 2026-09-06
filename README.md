@@ -107,3 +107,24 @@ for card in card_number_generator(1, 5):
     print(card)
 # 0000 0000 0000 0001 ... 0000 0000 0000 0005
 ```
+### Работа с JSON и внешним API
+
+Модуль `utils` содержит функцию `load_transactions` для чтения транзакций из JSON-файла.
+Модуль `external_api` содержит функцию `convert_to_rub` для конвертации суммы в рубли
+через внешний API (Exchange Rates Data API).
+
+```python
+from utils import load_transactions
+from external_api import convert_to_rub
+
+transactions = load_transactions("data/operations.json")
+amount_rub = convert_to_rub(transactions[0])
+```
+
+### Настройка API
+
+Скопируйте `.env.example` в `.env` и укажите ваш ключ API:
+
+```
+API_KEY=ваш_ключ_api
+```
