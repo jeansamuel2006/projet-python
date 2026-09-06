@@ -1,22 +1,19 @@
-import os
-from typing import Any
+from unittest.mock import patch
 
-import requests
-from dotenv import load_dotenv
-
-load_dotenv()
-API_KEY = os.getenv("API_KEY")
+from src.external_api import convert_to_rub
 
 
-def convert_to_rub(transaction: dict[str, Any]) -> float:
-    """Возвращает сумму транзакции в рублях (float)."""
-    amount = float(transaction["operationAmount"]["amount"])
-    currency = transaction["operationAmount"]["currency"]["code"]
-    if currency == "RUB":
-        return amount
-    url = "https://api.apilayer.com/exchangerates_data/convert"
-    params = {"to": "RUB", "from": currency, "amount": amount}
-    headers = {"apikey": API_KEY}
-    response = requests.get(url, headers=headers, params=params)
-    data = response.json()
-    return float(data["result"])
+def test_convert_rub():
+    transaction = {
+        "operationAmount": {"amount": "500.00", "currency": {"code": "RUB"}}
+    }
+    assert convert_to_rub(transaction) == 500.0
+
+
+@patch("src.external_api.requests.get")
+def test_convert_usd(mock_get):
+    mock_get.return_value.json.return_value = {"result": 7500.0}
+    transaction = {
+        "operationAmount": {"amount": "100.00", "currency": {"code": "USD"}}
+    }
+    assert convert_to_rub(transaction) == 7500.0
