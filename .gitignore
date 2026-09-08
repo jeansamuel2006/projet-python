@@ -1,7 +1,8 @@
 # Environnements virtuels
 .venv/
 venv/
-
+# Logs
+logs/*.log
 # Cache Python
 __pycache__/
 *.py[cod]
@@ -18,3 +19,9 @@ __pycache__/
 # Système
 .DS_Store
 Thumbs.db
+# Secrets
+.env
+
+# Fichiers de test/data générés
+.coverage
+backup.sql
