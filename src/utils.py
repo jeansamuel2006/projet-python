@@ -3,6 +3,8 @@ import logging
 import os
 from typing import Any
 
+import pandas as pd
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOGS_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOGS_DIR, exist_ok=True)
@@ -29,3 +31,15 @@ def load_transactions(path: str) -> list[dict[str, Any]]:
         return data
     logger.warning("Файл не содержит список")
     return []
+
+
+def load_transactions_csv(path: str) -> list[dict[str, Any]]:
+    """Читает транзакции из CSV-файла."""
+    df = pd.read_csv(path, delimiter=";")
+    return df.to_dict(orient="records")
+
+
+def load_transactions_xlsx(path: str) -> list[dict[str, Any]]:
+    """Читает транзакции из XLSX-файла."""
+    df = pd.read_excel(path)
+    return df.to_dict(orient="records")
