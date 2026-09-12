@@ -1,0 +1,19 @@
+from unittest.mock import patch
+
+import pandas as pd
+
+from src.utils import load_transactions_csv, load_transactions_xlsx
+
+
+@patch("src.utils.pd.read_csv")
+def test_load_csv(mock_read):
+    mock_read.return_value = pd.DataFrame([{"id": 1, "amount": 100}])
+    result = load_transactions_csv("fake.csv")
+    assert result == [{"id": 1, "amount": 100}]
+
+
+@patch("src.utils.pd.read_excel")
+def test_load_xlsx(mock_read):
+    mock_read.return_value = pd.DataFrame([{"id": 2, "amount": 200}])
+    result = load_transactions_xlsx("fake.xlsx")
+    assert result == [{"id": 2, "amount": 200}]

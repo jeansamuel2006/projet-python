@@ -107,3 +107,14 @@ for card in card_number_generator(1, 5):
     print(card)
 # 0000 0000 0000 0001 ... 0000 0000 0000 0005
 ```
+### Чтение CSV и XLSX
+
+Модуль `utils` также умеет читать транзакции из CSV и XLSX файлов
+с помощью библиотеки `pandas`:
+
+```python
+from utils import load_transactions_csv, load_transactions_xlsx
+
+csv_data = load_transactions_csv("data/transactions.csv")
+xlsx_data = load_transactions_xlsx("data/transactions_excel.xlsx")
+```
