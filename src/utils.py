@@ -19,27 +19,27 @@ logger.addHandler(file_handler)
 
 
 def load_transactions(path: str) -> list[dict[str, Any]]:
-    """Читает JSON-файл и возвращает список транзакций (или пустой список)."""
+    """Read a JSON file and return a list of transactions (or empty list)."""
     try:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        logger.error("Не удалось прочитать файл: %s", path)
+        logger.error("Failed to read file: %s", path)
         return []
     if isinstance(data, list):
-        logger.info("Загружено транзакций: %s", len(data))
+        logger.info("Loaded transactions: %s", len(data))
         return data
-    logger.warning("Файл не содержит список")
+    logger.warning("File does not contain a list")
     return []
 
 
 def load_transactions_csv(path: str) -> list[dict[str, Any]]:
-    """Читает транзакции из CSV-файла."""
+    """Read transactions from a CSV file and return a list of dicts."""
     df = pd.read_csv(path, delimiter=";")
     return df.to_dict(orient="records")
 
 
 def load_transactions_xlsx(path: str) -> list[dict[str, Any]]:
-    """Читает транзакции из XLSX-файла."""
+    """Read transactions from an XLSX file and return a list of dicts."""
     df = pd.read_excel(path)
     return df.to_dict(orient="records")
