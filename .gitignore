@@ -18,3 +18,9 @@ __pycache__/
 # Système
 .DS_Store
 Thumbs.db
+# Secrets
+.env
+
+# Fichiers de test/data générés
+.coverage
+backup.sql
