@@ -12,8 +12,12 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 
-file_handler = logging.FileHandler(os.path.join(LOGS_DIR, "utils.log"), mode="w", encoding="utf-8")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler(
+    os.path.join(LOGS_DIR, "utils.log"), mode="w", encoding="utf-8"
+)
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
