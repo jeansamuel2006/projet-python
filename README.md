@@ -107,7 +107,14 @@ for card in card_number_generator(1, 5):
     print(card)
 # 0000 0000 0000 0001 ... 0000 0000 0000 0005
 ```
-### Логирование
+### Чтение CSV и XLSX
 
-Модули `masks` и `utils` ведут логи в папку `logs/` (файлы `masks.log` и `utils.log`).
-Формат: время, модуль, уровень, сообщение. Логи перезаписываются при каждом запуске.
+Модуль `utils` также умеет читать транзакции из CSV и XLSX файлов
+с помощью библиотеки `pandas`:
+
+```python
+from utils import load_transactions_csv, load_transactions_xlsx
+
+csv_data = load_transactions_csv("data/transactions.csv")
+xlsx_data = load_transactions_xlsx("data/transactions_excel.xlsx")
+```

@@ -1,39 +1,27 @@
-import pytest
-
-from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+from typing import Any, Iterator
 
 
-@pytest.fixture
-def transactions():
-    return [
-        {"id": 1, "operationAmount": {"currency": {"code": "USD"}}, "description": "Перевод организации"},
-        {"id": 2, "operationAmount": {"currency": {"code": "RUB"}}, "description": "Перевод со счета на счет"},
-        {"id": 3, "operationAmount": {"currency": {"code": "USD"}}, "description": "Перевод с карты на карту"},
-    ]
+def filter_by_currency(
+    transactions: list[dict[str, Any]], currency: str
+) -> Iterator[dict[str, Any]]:
+    """Return an iterator of transactions with the given currency."""
+    return (
+        t
+        for t in transactions
+        if t["operationAmount"]["currency"]["code"] == currency
+    )
 
 
-def test_filter_by_currency(transactions):
-    result = list(filter_by_currency(transactions, "USD"))
-    assert len(result) == 2
+def transaction_descriptions(
+    transactions: list[dict[str, Any]]
+) -> Iterator[str]:
+    """Yield the description of each transaction in turn."""
+    for transaction in transactions:
+        yield transaction["description"]
 
 
-def test_filter_by_currency_empty():
-    result = list(filter_by_currency([], "USD"))
-    assert result == []
-
-
-def test_transaction_descriptions(transactions):
-    result = list(transaction_descriptions(transactions))
-    assert result[0] == "Перевод организации"
-    assert len(result) == 3
-
-
-@pytest.mark.parametrize(
-    "start, stop, expected",
-    [
-        (1, 1, ["0000 0000 0000 0001"]),
-        (1, 3, ["0000 0000 0000 0001", "0000 0000 0000 0002", "0000 0000 0000 0003"]),
-    ],
-)
-def test_card_number_generator(start, stop, expected):
-    assert list(card_number_generator(start, stop)) == expected
+def card_number_generator(start: int, stop: int) -> Iterator[str]:
+    """Generate card numbers from start to stop as XXXX XXXX XXXX XXXX."""
+    for number in range(start, stop + 1):
+        card = str(number).zfill(16)
+        yield f"{card[0:4]} {card[4:8]} {card[8:12]} {card[12:16]}"

@@ -9,8 +9,12 @@ os.makedirs(LOGS_DIR, exist_ok=True)  # crée logs/ s'il n'existe pas
 logger = logging.getLogger("masks")
 logger.setLevel(logging.DEBUG)
 
-file_handler = logging.FileHandler(os.path.join(LOGS_DIR, "masks.log"), mode="w", encoding="utf-8")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler(
+    os.path.join(LOGS_DIR, "masks.log"), mode="w", encoding="utf-8"
+)
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
