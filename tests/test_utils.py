@@ -2,8 +2,7 @@ from unittest.mock import mock_open, patch
 
 import pandas as pd
 
-from src.utils import (load_transactions, load_transactions_csv,
-                       load_transactions_xlsx)
+from src.utils import load_transactions, load_transactions_csv, load_transactions_xlsx
 
 
 def test_load_transactions_valid():
